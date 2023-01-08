@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Financials Visualizer Tool</title>
+    <link rel="stylesheet" href="/index.044e704e.css">
+    <script src="/index.18dbc454.js" defer=""></script>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <section>
+        <nav class="navbar bg-primary">
+            <div class="container-fluid">
+                <span class="navbar-brand text-light mb-0 h1">Financials Visualizer Tool</span>
+                <a class="text-light nav-link" href="#index.html">Home</a>
+            </div>
+        </nav>
+    </section>
+
+    <!-- Search banner -->
+    <section class="bg-light text-dark p-5 text-center">
+        <div class="container">
+            <label class="form-label">
+                <h1>Financial Data Search</h1>
+            </label>
+            <div class="input-group input-group-lg">
+                <span class="input-group-text">Ticker</span>
+                <span class="input-group-text">$</span>
+                <input type="text" class="form-control" placeholder="Enter a ticker symbol here" id="inputTicker">
+                <button class="btn btn-primary" onclick="getData()">Fetch Data</button>
+            </div>
+            <div class="form-text">Financial data is available for the U.S stock market only.</div>
+        </div>
+    </section>
+
+    <!-- Overview -->
+    <section class="p-3">
+        <div class="container text-center">
+            <h1 class="text-success" id="tickerSymbol">$ ----</h1>
+        </div>
+        <div class="container">
+            <!-- Ratio analysis goes here -->
+            <h6 class="tex-secondary text-center p-2">Ratio Analysis coming soon...</h6>
+        </div>
+    </section>
+
+    <!-- Graph cards -->
+    <section class="container-fluid justify-center bg-light">
+        <div class="p-5">
+            <div class="row gy-5">
+                <!-- Revenue -->
+                <div class="col">
+                    <div class="card">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <h4>Revenue (mil)</h4>
+                            </li>
+                            <!-- Graph -->
+                            <li class="list-group-item">
+                                <canvas id="revenueGraph"></canvas>
+                            </li>
+                            <!-- Button trigger modal -->
+                            <div class="container text-center p-3">
+                                <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#revenueLearnMore">
+                                    Learn about Revenue
+                                </button>
+                            </div>
+                            <!-- Modal -->
+                            <div class="modal fade" id="revenueLearnMore" tabindex="-1">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5">What is Revenue?</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Revenue is the money generated from normal business operations,
+                                            calculated
+                                            as the average sales
+                                            price times the number of units sold. It is the top line (or gross
+                                            income)
+                                            figure from which costs
+                                            are subtracted to determine net income. Revenue is also known as sales
+                                            on
+                                            the income statement.
+                                        </div>
+                                        <div class="modal-footer">
+                                            <a href="https://www.investopedia.com/terms/r/revenue.asp" class="btn btn-primary" role="button" target="_blank">Learn More</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Free Cash Flow -->
+                <div class="col">
+                    <div class="card">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <h4>Free Cash Flow (mil)</h4>
+                            </li>
+                            <!-- Graph -->
+                            <li class="list-group-item">
+                                <canvas id="freeCashFlowGraph"></canvas>
+                            </li>
+                            <!-- Button trigger modal -->
+                            <div class="container text-center p-3">
+                                <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#freeCashFlowLearnMore">
+                                    Learn about Free Cash Flow
+                                </button>
+                            </div>
+                            <!-- Modal -->
+                            <div class="modal fade" id="freeCashFlowLearnMore" tabindex="-1">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5">What is Free Cash Flow?</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Free cash flow (FCF) is the cash a company generates after taking into
+                                            consideration cash outflows that support its operations and maintain its
+                                            capital assets. In other words, free cash flow is the cash left over
+                                            after a
+                                            company pays for its operating expenses (OpEx) and capital expenditures
+                                            (CapEx).
+                                        </div>
+                                        <div class="modal-footer">
+                                            <a href="https://www.investopedia.com/ask/answers/033015/what-formula-calculating-free-cash-flow.asp" class="btn btn-primary" role="button" target="_blank">Learn More</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </ul>
+                    </div>
+                </div>
+                <!-- EBITDA -->
+                <div class="col">
+                    <div class="card">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <h4>EBITDA (mil)</h4>
+                            </li>
+                            <!-- Graph -->
+                            <li class="list-group-item">
+                                <canvas id="ebitdaGraph"></canvas>
+                            </li>
+                            <!-- Button trigger modal -->
+                            <div class="container text-center p-3">
+                                <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#ebitdaLearnMore">
+                                    Learn about EBITDA
+                                </button>
+                            </div>
+                            <!-- Modal -->
+                            <div class="modal fade" id="ebitdaLearnMore" tabindex="-1">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5">What is EBITDA?</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            EBITDA, or earnings before interest, taxes, depreciation, and
+                                            amortization,
+                                            is an alternate measure of profitability to net income. By stripping out
+                                            the
+                                            non-cash depreciation and amortization expense as well as taxes and debt
+                                            costs dependent on the capital structure, EBITDA attempts to represent
+                                            cash
+                                            profit generated by the company’s operations.
+                                        </div>
+                                        <div class="modal-footer">
+                                            <a href="https://www.investopedia.com/terms/e/ebitda.asp" class="btn btn-primary" role="button" target="_blank">Learn More</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <!-- Long Term Debt -->
+                <div class="col gy-5">
+                    <div class="card">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <h4>Long Term Debt (mil)</h4>
+                            </li>
+                            <!-- Graph -->
+                            <li class="list-group-item">
+                                <canvas id="longTermDebtGraph"></canvas>
+                            </li>
+                            <!-- Button trigger modal -->
+                            <div class="container text-center p-3">
+                                <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#longTermDebtLearnMore">
+                                    Learn about Long Term Debt
+                                </button>
+                            </div>
+                            <!-- Modal -->
+                            <div class="modal fade" id="longTermDebtLearnMore" tabindex="-1">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5">What is Long Term Debt?</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Long-term debt is debt that matures in more than one year. Long-term
+                                            debt
+                                            can be viewed from two perspectives: financial statement reporting by
+                                            the
+                                            issuer and financial investing. In financial statement reporting,
+                                            companies
+                                            must record long-term debt issuance and all of its associated payment
+                                            obligations on its financial statements. On the flip side, investing in
+                                            long-term debt includes putting money into debt investments with
+                                            maturities
+                                            of more than one year.
+                                        </div>
+                                        <div class="modal-footer">
+                                            <a href="https://www.investopedia.com/terms/l/longtermdebt.asp" class="btn btn-primary" role="button" target="_blank">Learn More</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Net Income -->
+                <div class="col gy-5">
+                    <div class="card">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <h4>Net Income (mil)</h4>
+                            </li>
+                            <!-- Graph -->
+                            <li class="list-group-item">
+                                <canvas id="netIncomeGraph"></canvas>
+                            </li>
+                            <!-- Button trigger modal -->
+                            <div class="container text-center p-3">
+                                <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#netIncomeLearnMore">
+                                    Learn about Net Income
+                                </button>
+                            </div>
+                            <!-- Modal -->
+                            <div class="modal fade" id="netIncomeLearnMore" tabindex="-1">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5">What is Net Income?</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Net income (NI), also called net earnings, is calculated as sales minus
+                                            cost
+                                            of goods sold, selling, general and administrative expenses, operating
+                                            expenses, depreciation, interest, taxes, and other expenses. It is a
+                                            useful
+                                            number for investors to assess how much revenue exceeds the expenses of
+                                            an
+                                            organization. This number appears on a company's income statement and is
+                                            also an indicator of a company's profitability.
+                                        </div>
+                                        <div class="modal-footer">
+                                            <a href="https://www.investopedia.com/terms/n/netincome.asp" class="btn btn-primary" role="button" target="_blank">Learn More</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Cash -->
+                <div class="col gy-5">
+                    <div class="card">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <h4>Cash Balance (mil)</h4>
+                            </li>
+                            <!-- Graph -->
+                            <li class="list-group-item">
+                                <canvas id="cashGraph"></canvas>
+                            </li>
+                            <!-- Button trigger modal -->
+                            <div class="container text-center p-3">
+                                <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#cashLearnMore">
+                                    Learn about Cash and Cash Equivalents
+                                </button>
+                            </div>
+                            <!-- Modal -->
+                            <div class="modal fade" id="cashLearnMore" tabindex="-1">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5">What is Cash and Cash Equivalents?</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Cash and cash equivalents refers to the line item on the balance sheet
+                                            that
+                                            reports the value of a company's assets that are cash or can be
+                                            converted
+                                            into cash immediately. Cash equivalents include bank accounts and
+                                            marketable
+                                            securities, which are debt securities with maturities of less than 90
+                                            days.
+                                            However, oftentimes cash equivalents do not include equity or stock
+                                            holdings
+                                            because they can fluctuate in value.
+                                        </div>
+                                        <div class="modal-footer">
+                                            <a href="https://www.investopedia.com/terms/c/cashandcashequivalents.asp" class="btn btn-primary" role="button" target="_blank">Learn More</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <div class="navbar-text bottom">
+        <div class="container text-center text-muted p-3">
+            <div class="row">
+                <div class="col">
+                    <h6>Created by Milo Schwartz</h6>
+                </div>
+                <div class="col">
+                    <h6>Data provided by Financial Modeling Prep (FMP)</h6>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="/index.16223c9f.js"></script>
+
+</body>
+
+</html>
