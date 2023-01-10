@@ -13,3 +13,7 @@
 .percentChangeBadge {
     font-size: 120%;
 }
+
+.graphContainer {
+    height: 150px;
+}

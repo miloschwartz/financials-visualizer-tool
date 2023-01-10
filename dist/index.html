@@ -28,54 +28,56 @@
     <section class="bg-light text-dark p-5 text-center">
         <div class="container">
             <label class="form-label">
-                <h1>Public Company Search</h1>
+                <h1>Ticker Search</h1>
             </label>
             <div class="input-group input-group-lg shadow-sm">
                 <span class="input-group-text">Ticker</span>
                 <span class="input-group-text">$</span>
                 <input type="text" class="form-control" placeholder="Enter a ticker symbol here" id="inputTicker">
-                <button class="btn btn-primary" onclick="getFinancials();getRatios();displayDashboard();getOverview()">Fetch Data</button>
+                <button class="btn btn-primary" onclick="getRatios();displayDataDashboardAnnual();getOverview();getFinancials()">Fetch Data</button>
             </div>
-            <div class="form-text">Currently, financial data is available for the U.S stock market only.</div>
+            <div class="form-text">Complete market coverage with 30 years of historical data.</div>
         </div>
     </section>
 
     <!-- Dashboard -->
-    <div id="dataDashboard" style="display: none">
-        <!-- Overview -->
-        <section class="p-4" id="overview" style="display: none">
-            <div class="container text-center">
-                <div class="row justify-content-center">
-                    <div class="col-auto my-auto">
-                        <img src="data:," id="companyLogo" class="companyLogo">
-                    </div>
-                    <div class="col-auto my-auto">
-                        <span class="text-dark companyName" id="companyName"></span>
-                    </div>
-                </div>
-            </div>
-            <div class="container text-center">
-                <!-- Ratio analysis goes here -->
-                <div class="row justify-content-md-center p-2">
-                    <div class="col-md-auto">
-                        <span class="badge bg-secondary text-light">
-                            <div class="ratioBadge" id="tickerSymbol"></div>
-                        </span>
-                    </div>
-                    <div class="col-md-auto">
-                        <span class="badge bg-secondary text-light">
-                            <div class="ratioBadge" id="exchange"></div>
-                        </span>
-                    </div>
-                    <div class="col-md-auto">
-                        <span class="badge bg-secondary text-light">
-                            <div class="ratioBadge" id="sector"></div>
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </section>
 
+    <!-- Overview -->
+    <section class="p-4" id="overview" style="display: none">
+        <div class="container text-center">
+            <div class="row justify-content-center">
+                <div class="col-auto my-auto">
+                    <img src="data:," id="companyLogo" class="companyLogo">
+                </div>
+                <div class="col-auto my-auto">
+                    <span class="text-dark companyName" id="companyName"></span>
+                </div>
+            </div>
+        </div>
+        <div class="container text-center">
+            <!-- Ratio analysis goes here -->
+            <div class="row justify-content-md-center">
+                <div class="col-md-auto p-2">
+                    <span class="badge bg-info text-light">
+                        <div class="ratioBadge" id="tickerSymbol"></div>
+                    </span>
+                </div>
+                <div class="col-md-auto p-2">
+                    <span class="badge bg-info bg-secondary text-light">
+                        <div class="ratioBadge" id="exchange"></div>
+                    </span>
+                </div>
+                <div class="col-md-auto p-2">
+                    <span class="badge bg-info bg-secondary text-light">
+                        <div class="ratioBadge" id="sector"></div>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <div id="dataDashboardAnnual" style="display: none">
         <!-- Graph cards -->
         <section class="container-fluid justify-center bg-light">
             <div class="p-5">
@@ -85,7 +87,7 @@
                         <div class="card shadow-sm">
                             <div class="card-header">
                                 <div class="row">
-                                    <div class="col">
+                                    <div class="col-auto">
                                         <h4>Revenue (mil)</h4>
                                     </div>
                                     <div class="col">
@@ -113,7 +115,9 @@
                                 </div>
                             </div>
                             <div class="card-body">
-                                <canvas id="revenueGraph"></canvas>
+                                <div class="graphContainer">
+                                    <canvas id="revenueGraph"></canvas>
+                                </div>
                             </div>
                             <div class="card-footer">
                                 <!-- Button trigger modal -->
@@ -155,7 +159,7 @@
                         <div class="card shadow-sm">
                             <div class="card-header">
                                 <div class="row">
-                                    <div class="col">
+                                    <div class="col-auto">
                                         <h4>Free Cash Flow (mil)</h4>
                                     </div>
                                     <div class="col">
@@ -183,7 +187,7 @@
                                 </div>
                             </div>
                             <div class="card-body">
-                                <canvas id="freeCashFlowGraph"></canvas>
+                                <div class="graphContainer"><canvas id="freeCashFlowGraph"></canvas></div>
                             </div>
                             <div class="card-footer">
                                 <!-- Button trigger modal -->
@@ -221,10 +225,36 @@
                     <div class="col-xxl-3 col-xl-6">
                         <div class="card shadow-sm">
                             <div class="card-header">
-                                <h4>EBITDA (mil)</h4>
+                                <div class="row">
+                                    <div class="col-auto">
+                                        <h4>EBITDA (mil)</h4>
+                                    </div>
+                                    <div class="col">
+                                        <!-- Button pop out -->
+                                        <div class="text-end">
+                                            <button type="button" class="btn btn-link text-dark" data-bs-toggle="modal" data-bs-target="#popOutEBITDA">
+                                                <i class="bi bi-arrows-angle-expand"></i>
+                                            </button>
+                                        </div>
+                                        <!-- Graph modal -->
+                                        <div class="modal fade" id="popOutEBITDA" tabindex="-1">
+                                            <div class="modal-dialog modal-dialog-centered modal-xl">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h1 class="modal-title fs-5">EBITDA (mil)</h1>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <canvas id="ebitdaGraphPopOut"></canvas>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="card-body">
-                                <canvas id="ebitdaGraph"></canvas>
+                                <div class="graphContainer"><canvas id="ebitdaGraph"></canvas></div>
                             </div>
                             <div class="card-footer">
                                 <!-- Button trigger modal -->
@@ -264,10 +294,36 @@
                     <div class="col-xxl-3 col-xl-6">
                         <div class="card shadow-sm">
                             <div class="card-header">
-                                <h4>Net Income (mil)</h4>
+                                <div class="row">
+                                    <div class="col-auto">
+                                        <h4>Net Income (mil)</h4>
+                                    </div>
+                                    <div class="col">
+                                        <!-- Button pop out -->
+                                        <div class="text-end">
+                                            <button type="button" class="btn btn-link text-dark" data-bs-toggle="modal" data-bs-target="#popOutNetIncome">
+                                                <i class="bi bi-arrows-angle-expand"></i>
+                                            </button>
+                                        </div>
+                                        <!-- Graph modal -->
+                                        <div class="modal fade" id="popOutNetIncome" tabindex="-1">
+                                            <div class="modal-dialog modal-dialog-centered modal-xl">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h1 class="modal-title fs-5">Net Income (mil)</h1>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <canvas id="netIncomeGraphPopOut"></canvas>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="card-body">
-                                <canvas id="netIncomeGraph"></canvas>
+                                <div class="graphContainer"><canvas id="netIncomeGraph"></canvas></div>
                             </div>
                             <div class="card-footer">
                                 <!-- Button trigger modal -->
@@ -310,10 +366,36 @@
                     <div class="col-xxl-3 col-xl-6 gy-5">
                         <div class="card shadow-sm">
                             <div class="card-header">
-                                <h4>Cash Balance (mil)</h4>
+                                <div class="row">
+                                    <div class="col-auto">
+                                        <h4>Cash Balance (mil)</h4>
+                                    </div>
+                                    <div class="col">
+                                        <!-- Button pop out -->
+                                        <div class="text-end">
+                                            <button type="button" class="btn btn-link text-dark" data-bs-toggle="modal" data-bs-target="#popOutCash">
+                                                <i class="bi bi-arrows-angle-expand"></i>
+                                            </button>
+                                        </div>
+                                        <!-- Graph modal -->
+                                        <div class="modal fade" id="popOutCash" tabindex="-1">
+                                            <div class="modal-dialog modal-dialog-centered modal-xl">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h1 class="modal-title fs-5">Cash Balance (mil)</h1>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <canvas id="cashGraphPopOut"></canvas>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="card-body">
-                                <canvas id="cashGraph"></canvas>
+                                <div class="graphContainer"><canvas id="cashGraph"></canvas></div>
                             </div>
                             <div class="card-footer">
                                 <!-- Button trigger modal -->
@@ -352,20 +434,46 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Long Term Debt -->
+                    <!-- Debt -->
                     <div class="col-xxl-3 col-xl-6 gy-5">
                         <div class="card shadow-sm">
                             <div class="card-header">
-                                <h4>Long Term Debt (mil)</h4>
+                                <div class="row">
+                                    <div class="col-auto">
+                                        <h4>Total Debt (mil)</h4>
+                                    </div>
+                                    <div class="col">
+                                        <!-- Button pop out -->
+                                        <div class="text-end">
+                                            <button type="button" class="btn btn-link text-dark" data-bs-toggle="modal" data-bs-target="#totalDebt">
+                                                <i class="bi bi-arrows-angle-expand"></i>
+                                            </button>
+                                        </div>
+                                        <!-- Graph modal -->
+                                        <div class="modal fade" id="totalDebt" tabindex="-1">
+                                            <div class="modal-dialog modal-dialog-centered modal-xl">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h1 class="modal-title fs-5">Total Debt (mil)</h1>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <canvas id="totalDebtGraphPopOut"></canvas>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="card-body">
-                                <canvas id="longTermDebtGraph"></canvas>
+                                <div class="graphContainer"><canvas id="totalDebtGraph"></canvas></div>
                             </div>
                             <div class="card-footer">
                                 <!-- Button trigger modal -->
                                 <div class="container text-center p-2">
                                     <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#longTermDebtLearnMore">
-                                        Learn about Long Term Debt
+                                        Learn about Total Debt
                                     </button>
                                 </div>
                                 <!-- Modal -->
@@ -373,24 +481,19 @@
                                     <div class="modal-dialog modal-dialog-centered">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h1 class="modal-title fs-5">What is Long Term Debt?</h1>
+                                                <h1 class="modal-title fs-5">What is Total Debt?</h1>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
-                                                Long-term debt is debt that matures in more than one year. Long-term
-                                                debt
-                                                can be viewed from two perspectives: financial statement reporting by
-                                                the
-                                                issuer and financial investing. In financial statement reporting,
-                                                companies
-                                                must record long-term debt issuance and all of its associated payment
-                                                obligations on its financial statements. On the flip side, investing in
-                                                long-term debt includes putting money into debt investments with
-                                                maturities
-                                                of more than one year.
+                                                Total debt is calculated by adding up a company's liabilities, or debts,
+                                                which are categorized as short and long-term debt. Financial lenders or
+                                                business leaders may look at a company's balance sheet to factor in the
+                                                debt ratio to make informed decisions about future loan options. They
+                                                calculate the debt ratio by taking the total debt and dividing it by the
+                                                total assets.
                                             </div>
                                             <div class="modal-footer">
-                                                <a href="https://www.investopedia.com/terms/l/longtermdebt.asp" class="btn btn-primary" role="button" target="_blank">Learn More</a>
+                                                <a href="https://www.indeed.com/career-advice/career-development/how-to-calculate-total-debt" class="btn btn-primary" role="button" target="_blank">Learn More</a>
                                             </div>
                                         </div>
                                     </div>
@@ -398,16 +501,150 @@
                             </div>
                         </div>
                     </div>
+                    <!-- Gross Profit -->
                     <div class="col-xxl-3 col-xl-6 gy-5">
-
+                        <div class="card shadow-sm">
+                            <div class="card-header">
+                                <div class="row">
+                                    <div class="col-auto">
+                                        <h4>Gross Profit (mil)</h4>
+                                    </div>
+                                    <div class="col">
+                                        <!-- Button pop out -->
+                                        <div class="text-end">
+                                            <button type="button" class="btn btn-link text-dark" data-bs-toggle="modal" data-bs-target="#grossProfitPopOut">
+                                                <i class="bi bi-arrows-angle-expand"></i>
+                                            </button>
+                                        </div>
+                                        <!-- Graph modal -->
+                                        <div class="modal fade" id="grossProfitPopOut" tabindex="-1">
+                                            <div class="modal-dialog modal-dialog-centered modal-xl">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h1 class="modal-title fs-5">Gross Profit (mil)</h1>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <canvas id="grossProfitGraphPopOut"></canvas>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="graphContainer"><canvas id="grossProfitGraph"></canvas></div>
+                            </div>
+                            <div class="card-footer">
+                                <!-- Button trigger modal -->
+                                <div class="container text-center p-2">
+                                    <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#grossProfitLearnMore">
+                                        Learn about Gross Profit
+                                    </button>
+                                </div>
+                                <!-- Modal -->
+                                <div class="modal fade" id="grossProfitLearnMore" tabindex="-1">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5">What is Gross Profit?</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                Gross profit is the profit a company makes after deducting the costs
+                                                associated with making and selling its products, or the costs associated
+                                                with providing its services. Gross profit will appear on a company's
+                                                income statement and can be calculated by subtracting the cost of goods
+                                                sold (COGS) from revenue (sales). These figures can be found on a
+                                                company's income statement. Gross profit may also be referred to as
+                                                sales profit or gross income.
+                                            </div>
+                                            <div class="modal-footer">
+                                                <a href="https://www.investopedia.com/terms/g/grossprofit.asp" class="btn btn-primary" role="button" target="_blank">Learn More</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-xxl-3 col-xl-¸ gy-5">
-
+                    <!-- Shareholder Equity -->
+                    <div class="col-xxl-3 col-xl-6 gy-5">
+                        <div class="card shadow-sm">
+                            <div class="card-header">
+                                <div class="row">
+                                    <div class="col-auto">
+                                        <h4>Shareholder Equity (mil)</h4>
+                                    </div>
+                                    <div class="col">
+                                        <!-- Button pop out -->
+                                        <div class="text-end">
+                                            <button type="button" class="btn btn-link text-dark" data-bs-toggle="modal" data-bs-target="#shareholderEquityPopOut">
+                                                <i class="bi bi-arrows-angle-expand"></i>
+                                            </button>
+                                        </div>
+                                        <!-- Graph modal -->
+                                        <div class="modal fade" id="shareholderEquityPopOut" tabindex="-1">
+                                            <div class="modal-dialog modal-dialog-centered modal-xl">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h1 class="modal-title fs-5">Shareholder Equity (mil)</h1>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <canvas id="shareholderEquityGraphPopOut"></canvas>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="graphContainer"><canvas id="equityGraph"></canvas></div>
+                            </div>
+                            <div class="card-footer">
+                                <!-- Button trigger modal -->
+                                <div class="container text-center p-2">
+                                    <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#equityLearnMore">
+                                        Learn about Shareholder Equity
+                                    </button>
+                                </div>
+                                <!-- Modal -->
+                                <div class="modal fade" id="equityLearnMore" tabindex="-1">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5">What is Shareholder Equity?</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                The term shareholder equity (SE) refers to a company's net worth or the
+                                                total dollar amount that would be returned to its shareholders if the
+                                                company is liquidated after all debts are paid off. As such, SE is the
+                                                owners' residual claim on assets after all debts are satisfied.
+                                                Shareholder equity is equal to a firm's total assets minus its total
+                                                liabilities. Retained earnings are part of shareholder equity as is any
+                                                capital invested into the company. This metric allows analysts and
+                                                investors to determine the value of company-related financial ratios,
+                                                providing them with the tools to make better, more well-informed
+                                                investment decisions.
+                                            </div>
+                                            <div class="modal-footer">
+                                                <a href="https://www.investopedia.com/terms/s/shareholdersequity.asp" class="btn btn-primary" role="button" target="_blank">Learn More</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
     </div>
+
 
     <!-- Footer -->
     <section>
@@ -415,10 +652,11 @@
             <div class="container text-center text-muted p-3">
                 <div class="row">
                     <div class="col">
-                        Created by Milo Schwartz
+                        <div style="font-size: 15px">Created by Milo Schwartz</div>
                     </div>
                     <div class="col">
-                        Data provided by Financial Modeling Prep (FMP)
+                        <div style="font-size: 15px"> Data provided by Financial Modeling Prep (FMP)
+                        </div>
                     </div>
                 </div>
             </div>
